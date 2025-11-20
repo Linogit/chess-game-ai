@@ -13,7 +13,7 @@ services:
     stdin_open: true
     tty: true
   stockfish:
-    image: stockfishorg/stockfish:latest
+    image: niklasf/fishnet 
     container_name: stockfish-engine
     ports:
       - "8080:8080"

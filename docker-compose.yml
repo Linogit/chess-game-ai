@@ -3,6 +3,12 @@ version: '3.8'
 
 services:
   # Servizio principale dell'applicazione ChessGame
+   stockfish:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
   chess-cg:
     build: .  # Costruisce l'immagine usando il Dockerfile nella cartella corrente
     container_name: chess-cg-app  # Nome fisso del container

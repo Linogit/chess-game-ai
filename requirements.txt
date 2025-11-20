@@ -1,0 +1,9 @@
+pygame==2.5.2                    # Libreria per creare giochi e applicazioni multimediali
+python-chess==1.999              # Libreria per implementare la logica del gioco degli scacchi
+stockfish==3.28.0                # Motore scacchistico AI utilizzato per generare mosse intelligenti
+pytest==7.4.0                    # Framework principale per scrivere ed eseguire test automatici
+pytest-cov==4.1.0                # Plugin per misurare la percentuale di codice coperta dai test
+flake8==6.0.0                    # Strumento di linting per analisi statica e controllo stile codice
+black==23.7.0                    # Formattatore automatico che standardizza lo stile del codice
+mypy==1.5.0                      # Checker di tipi statici per rilevare errori di tipo nel codice
+bandit==1.7.5                    # Tool di sicurezza per identificare vulnerabilità nel codice Python

@@ -1,0 +1,91 @@
+# Nome del workflow CI/CD
+name: Chess AI CI/CD
+
+# Trigger: si attiva su push e pull request
+on:
+  push:
+    branches: [ main, develop ]  # Si attiva su push a main e develop
+  pull_request:
+    branches: [ main ]           # Si attiva su PR verso main
+
+# Job definiti nel workflow
+jobs:
+  # Job di testing - esegue tutti i controlli di qualità
+  test:
+    runs-on: ubuntu-latest       # Esegue su runner Ubuntu
+    
+    # Servizi containerizzati necessari per i test
+    services:
+      stockfish:
+        image: niklasf/stockfish:latest  # Container Stockfish per i test
+        ports:
+          - 8080:8080                    # Espone Stockfish sulla porta 8080
+
+    # Sequenza di steps del job
+    steps:
+    # Step 1: Checkout del codice
+    - uses: actions/checkout@v4          # Scarica il codice dal repository
+    
+    # Step 2: Setup Python
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'           # Installa Python 3.11
+        
+    # Step 3: Installa dipendenze di sistema
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y stockfish libsdl2-2.0-0 libsdl2-image-2.0-0
+        
+    # Step 4: Installa dipendenze Python
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip    # Aggiorna pip
+        pip install -r requirements.txt        # Installa dipendenze progetto
+        pip install pytest pytest-cov flake8 black mypy bandit  # Installa tool sviluppo
+        
+    # Step 5: Genera file SVG dei pezzi
+    - name: Generate SVG files
+      run: python createSvgFiles.py            # Crea assets grafici
+      
+    # Step 6: Controllo formattazione codice con Black
+    - name: Check code style with black
+      run: black --check src/                  # Verifica che il codice sia formattato
+      
+    # Step 7: Analisi statica del codice con flake8
+    - name: Lint with flake8
+      run: flake8 src/ --max-line-length=88 --extend-ignore=E203,W503
+      
+    # Step 8: Controllo dei tipi con mypy
+    - name: Type checking with mypy
+      run: mypy src/                          # Verifica i type hints
+      
+    # Step 9: Scansione sicurezza con bandit
+    - name: Security scan with bandit
+      run: bandit -r src/ -f json -o bandit-report.json  # Cerca vulnerabilità
+      
+    # Step 10: Esegue i test unitari
+    - name: Run tests with pytest
+      run: |
+        pytest tests/ -v --cov=src --cov-report=xml  # Test con coverage
+
+  # Job di build Docker - esegue solo dopo il test
+  docker:
+    needs: test                   # Dipende dal job test
+    runs-on: ubuntu-latest        # Esegue su Ubuntu
+    if: github.ref == 'refs/heads/main'  # Solo sul branch main
+    
+    steps:
+    # Step 1: Checkout codice
+    - uses: actions/checkout@v4
+    
+    # Step 2: Build dell'immagine Docker
+    - name: Build Docker image
+      run: docker build -t chess-ai:latest .  # Costruisce l'immagine
+      
+    # Step 3: Test dell'immagine Docker
+    - name: Test Docker image
+      run: |
+        # Verifica che le dipendenze siano installate correttamente
+        docker run --rm chess-ai:latest python -c "import pygame; import chess; print('Dependencies OK')"

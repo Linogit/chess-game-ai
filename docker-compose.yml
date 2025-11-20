@@ -1,0 +1,23 @@
+# Versione dello schema docker-compose
+version: '3.8'
+
+services:
+  # Servizio principale dell'applicazione ChessGame
+  chess-cg:
+    build: .  # Costruisce l'immagine usando il Dockerfile nella cartella corrente
+    container_name: chess-cg-app  # Nome fisso del container
+    volumes:
+      - ./src:/app/src           # Monta la cartella src in sincronia (sviluppo)
+      - ./pieces_png:/app/pieces_png  # Monta le immagini PNG
+      - ./pieces_svg:/app/pieces_svg  # Monta le immagini SVG
+    environment:
+      - PYTHONPATH=/app/src      # Imposta il path Python per gli import
+    stdin_open: true             # Mantiene STDIN aperto (input interattivo)
+    tty: true                    # Alloca un terminale virtuale
+
+  # Servizio opzionale: Stockfish come servizio separato
+stockfish:
+    image: niklasf/stockfish:latest  # Usa immagine pre-costruita di Stockfish
+    container_name: stockfish-engine  # Nome del container Stockfish
+    ports:
+      - "8080:8080"              # Espone la porta per connessioni esterne

@@ -1,0 +1,34 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/           # Cartella con bytecode Python compilato
+*.py[cod]              # File bytecode Python (.pyc, .pyo, .pyd)
+*$py.class             # File bytecode per Jython
+
+# Virtual environments
+venv/                  # Ambiente virtuale Python standard
+env/                   # Altro nome comune per ambienti virtuali
+.venv/                 # Ambiente virtuale "nascosto"
+
+# IDE
+.vscode/               # Configurazioni Visual Studio Code
+.idea/                 # Configurazioni PyCharm/IntelliJ
+*.swp                  # File temporanei Vim
+*.swo                  # Altri file temporanei Vim
+
+# OS
+.DS_Store              # File metadati macOS
+Thumbs.db              # File metadati Windows
+
+# Logs
+*.log                  # File di log
+
+# Docker
+.dockerignore          # File ignore di Docker (già gestito da Git)
+
+# Testing
+.coverage              # Report copertura test
+.pytest_cache/         # Cache di pytest
+htmlcov/               # Report HTML copertura test
+
+# Pieces directories
+pieces_png/            # Cartella con pezzi scacchi PNG (probabilmente generata)
+pieces_svg/            # Cartella con pezzi scacchi SVG (probabilmente generata)

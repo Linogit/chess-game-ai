@@ -1,17 +1,14 @@
 
 
 services:
-  chess-cg:
+  chess-cg-app:
     build: .
-    container_name: chess-cg-app
     volumes:
-      - ./src:/app/src
-      - ./pieces_png:/app/pieces_png
-      - ./pieces_svg:/app/pieces_svg
+      - .:/app
     environment:
-      - PYTHONPATH=/app/src
-    stdin_open: true
-    tty: true
+      - SDL_VIDEODRIVER=dummy
+      - SDL_AUDIODRIVER=disk
+      - XDG_RUNTIME_DIR=/tmp/runtime-root
   stockfish:
     image: niklasf/fishnet 
     container_name: stockfish-engine

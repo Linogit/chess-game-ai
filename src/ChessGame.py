@@ -37,6 +37,9 @@ class ChessGame:
         # self.__engine = chess.engine.SimpleEngine.popen_uci("/opt/homebrew/bin/stockfish")
         self.__engine = chess.engine.SimpleEngine.popen_uci(
             "C:/Users/linoq/stockfish/stockfish-windows-x86-64-avx2.exe"
+        #    self.__engine = chess.engine.SimpleEngine.popen_uci("stockfish")
+        # per far trovare il comando stockfish nel PATH del sistema
+         self.__engine = chess.engine.SimpleEngine.popen_uci("stockfish")
         )
 
         # Velocità di gioco e profondità di ricerca dell'AI

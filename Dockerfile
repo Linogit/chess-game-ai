@@ -1,4 +1,4 @@
- # Utilizza l'immagine base ufficiale Python 3.11 versione slim (leggera)
+# Utilizza l'immagine base ufficiale Python 3.11 versione slim (leggera)
 FROM python:3.11-slim
 
 # Install system dependencies

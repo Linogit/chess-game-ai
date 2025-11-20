@@ -1,6 +1,5 @@
-FROM python:3.11-slim
+FROM python:3.11-bullseye
 
-# Installa le dipendenze di sistema in un unico layer
 RUN apt-get update && apt-get install -y \
     python3-pip \
     libsdl2-2.0-0 \
@@ -18,19 +17,17 @@ WORKDIR /app
 
 COPY requirements.txt .
 
-# Installa Stockfish manualmente (versione Linux)
-RUN wget https://stockfishchess.org/files/stockfish-16.1-linux-x64.zip \
-    && unzip stockfish-16.1-linux-x64.zip \
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Installa Stockfish
+RUN wget -q https://stockfishchess.org/files/stockfish-16.1-linux-x64.zip \
+    && unzip -q stockfish-16.1-linux-x64.zip \
     && mv stockfish-16.1-linux-x64/Linux/stockfish-x64-avx2 /usr/local/bin/stockfish \
     && chmod +x /usr/local/bin/stockfish \
     && rm -rf stockfish-16.1-linux-x64*
 
-# Installa le dipendenze Python
-RUN pip install --no-cache-dir -r requirements.txt
-
 COPY . .
 
-# Configura ambiente
 ENV SDL_VIDEODRIVER=dummy
 ENV SDL_AUDIODRIVER=disk
 ENV XDG_RUNTIME_DIR=/tmp/runtime-root

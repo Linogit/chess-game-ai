@@ -14,7 +14,10 @@ services:
     tty: true
 
   stockfish:
-    image: niklasf/stockfish:latest
+    image: stockfishorg/stockfish:latest
     container_name: stockfish-engine
     ports:
       - "8080:8080"
+      services:
+   
+   

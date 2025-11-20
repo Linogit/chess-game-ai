@@ -1,7 +1,6 @@
-# Utilizza l'immagine base ufficiale Python 3.11 versione slim
 FROM python:3.11-slim
 
-# Installa le dipendenze necessarie, inclusa Stockfish
+# Installa le dipendenze di sistema in un unico layer
 RUN apt-get update && apt-get install -y \
     python3-pip \
     libsdl2-2.0-0 \
@@ -11,24 +10,30 @@ RUN apt-get update && apt-get install -y \
     libportmidi0 \
     libswresample3 \
     libavformat58 \
-    stockfish \
+    wget \
+    unzip \
     && rm -rf /var/lib/apt/lists/*
 
-# Imposta la working directory
 WORKDIR /app
 
-# Copia i file requirements e installa le dipendenze Python
 COPY requirements.txt .
+
+# Installa Stockfish manualmente (versione Linux)
+RUN wget https://stockfishchess.org/files/stockfish-16.1-linux-x64.zip \
+    && unzip stockfish-16.1-linux-x64.zip \
+    && mv stockfish-16.1-linux-x64/Linux/stockfish-x64-avx2 /usr/local/bin/stockfish \
+    && chmod +x /usr/local/bin/stockfish \
+    && rm -rf stockfish-16.1-linux-x64*
+
+# Installa le dipendenze Python
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copia il codice dell'applicazione
 COPY . .
 
-# Imposta le variabili d'ambiente per pygame in ambiente headless
+# Configura ambiente
 ENV SDL_VIDEODRIVER=dummy
 ENV SDL_AUDIODRIVER=disk
 ENV XDG_RUNTIME_DIR=/tmp/runtime-root
 RUN mkdir -p ${XDG_RUNTIME_DIR} && chmod 0700 ${XDG_RUNTIME_DIR}
 
-# Comando di avvio
 CMD ["python", "src/ChessGame.py"]

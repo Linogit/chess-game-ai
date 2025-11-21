@@ -3,9 +3,10 @@ services:
     build: .
     volumes:
       - .:/app
-      - /tmp/.X11-unix:/tmp/.X11-unix:rw  # Forward X11 socket
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
     environment:
-      - DISPLAY=${DISPLAY}                # Usa il display dell'host
+      - DISPLAY=${DISPLAY}
       - XAUTHORITY=/tmp/.Xauthority
-    network: host
-  
+    network_mode: host  # CORRETTO: usa network_mode invece di network
+    stdin_open: true
+    tty: true

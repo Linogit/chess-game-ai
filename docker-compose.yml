@@ -10,19 +10,4 @@ services:
       - PYTHONPATH=/app/src
     stdin_open: true
     tty: true
-    depends_on:
-      - stockfish
-
-  # Opzione A: Immagine ufficiale alternativa
-  stockfish:
-    image: stockfish/stockfish:latest
-    container_name: stockfish-engine
-    ports:
-      - "8080:8080"
-
-  # Oppure Opzione B: Altra immagine popolare
-  # stockfish:
-  #   image: djezz77/stockfish:latest
-  #   container_name: stockfish-engine
-  #   ports:
-  #     - "8080:8080"
+    # Stockfish è ora installato direttamente in questo container

@@ -43,3 +43,5 @@ RUN mkdir -p /tmp/runtime-root
 
 # Comando per eseguire l'applicazione
 CMD ["xvfb-run", "-a", "python", "src/ChessGame.py"]
+
+

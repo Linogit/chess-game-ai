@@ -41,9 +41,7 @@ class ChessGame:
         #    self.__engine = chess.engine.SimpleEngine.popen_uci("stockfish")
         # per far trovare il comando stockfish nel PATH del sistema
            # RIGA CORRETTA:
-     
-        self.__engine = chess.engine.SimpleEngine.popen_uci("/usr/games/stockfish")
-        
+        self.__engine = chess.engine.SimpleEngine.popen_uci("/usr/local/bin/stockfish")
 
         # Velocità di gioco e profondità di ricerca dell'AI
         self.__speed = 0.1

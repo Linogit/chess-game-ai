@@ -15,8 +15,8 @@ COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Verifica che Stockfish sia installato e trova il percorso esatto
-RUN which stockfish && stockfish --version
+# Verifica l'installazione di Stockfish
+RUN dpkg -L stockfish
 
 COPY . .
 

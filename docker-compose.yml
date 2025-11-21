@@ -1,11 +1,12 @@
 services:
   chess-cg-app:
     build: .
-    ports:
-      - "8088:80"   #  QUESTA RIGA DEVE ESSERCI!
     volumes:
       - .:/app
     environment:
       - SDL_VIDEODRIVER=dummy
       - SDL_AUDIODRIVER=disk
       - XDG_RUNTIME_DIR=/tmp/runtime-root
+    # Aggiungi queste righe per supportare la GUI
+    stdin_open: true
+    tty: true

@@ -35,7 +35,7 @@ class ChessGame:
 
         # Avvio del motore scacchistico Stockfish
         # self.__engine = chess.engine.SimpleEngine.popen_uci("/opt/homebrew/bin/stockfish")
-          # RIGA CORRETTA:
+        # RIGA CORRETTA:
         self.__engine = chess.engine.SimpleEngine.popen_uci("stockfish")
         # ---asteriscata dava errori
         #self.__engine = chess.engine.SimpleEngine.popen_uci(

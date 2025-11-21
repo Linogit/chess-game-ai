@@ -1,5 +1,4 @@
 services:
-  # Servizio principale dell'applicazione ChessGame
   chess-cg:
     build: .
     container_name: chess-cg-app
@@ -11,12 +10,19 @@ services:
       - PYTHONPATH=/app/src
     stdin_open: true
     tty: true
-    # Se hai bisogno che chess-cg comunichi con stockfish, aggiungi:
     depends_on:
       - stockfish
-  # Servizio Stockfish separato
+
+  # Opzione A: Immagine ufficiale alternativa
   stockfish:
-    image: niklasf/stockfish:latest
+    image: stockfish/stockfish:latest
     container_name: stockfish-engine
     ports:
       - "8080:8080"
+
+  # Oppure Opzione B: Altra immagine popolare
+  # stockfish:
+  #   image: djezz77/stockfish:latest
+  #   container_name: stockfish-engine
+  #   ports:
+  #     - "8080:8080"

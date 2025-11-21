@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # Servizio principale dell'applicazione ChessGame
   chess-cg:
@@ -16,7 +14,6 @@ services:
     # Se hai bisogno che chess-cg comunichi con stockfish, aggiungi:
     depends_on:
       - stockfish
-
   # Servizio Stockfish separato
   stockfish:
     image: niklasf/stockfish:latest

@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   # Servizio principale dell'applicazione ChessGame
   chess-cg:

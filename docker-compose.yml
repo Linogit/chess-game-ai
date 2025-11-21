@@ -1,19 +1,11 @@
 services:
   chess-cg-app:
     build: .
-    ports:
-      - "8088:80"  # ESPORTA LA PORTA! - importante
     volumes:
       - .:/app
     environment:
       - SDL_VIDEODRIVER=dummy
       - SDL_AUDIODRIVER=disk
       - XDG_RUNTIME_DIR=/tmp/runtime-root
-    depends_on:
-      - stockfish
-
-  stockfish:
-    image: nodefish/stockfish:latest  # IMMAGINE CORRETTA
-    container_name: stockfish-engine
-    # Rimuovi "ports: 8080:8080" se Stockfish è solo per uso interno
-
+    stdin_open: true
+    tty: true

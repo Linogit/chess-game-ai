@@ -35,15 +35,15 @@ class ChessGame:
 
         # Avvio del motore scacchistico Stockfish
         # self.__engine = chess.engine.SimpleEngine.popen_uci("/opt/homebrew/bin/stockfish")
-        # RIGA CORRETTA:
-        self.__engine = chess.engine.SimpleEngine.popen_uci("stockfish")
         # ---asteriscata dava errori
         #self.__engine = chess.engine.SimpleEngine.popen_uci(
         #    "C:/Users/linoq/stockfish/stockfish-windows-x86-64-avx2.exe"
         #    self.__engine = chess.engine.SimpleEngine.popen_uci("stockfish")
         # per far trovare il comando stockfish nel PATH del sistema
-         self.__engine = chess.engine.SimpleEngine.popen_uci("stockfish")
-        )
+           # RIGA CORRETTA:
+     
+        self.__engine = chess.engine.SimpleEngine.popen_uci("stockfish")
+        
 
         # Velocità di gioco e profondità di ricerca dell'AI
         self.__speed = 0.1

@@ -8,15 +8,4 @@ services:
       - DISPLAY=${DISPLAY}                # Usa il display dell'host
       - XAUTHORITY=/tmp/.Xauthority
     network: host
-    
-    
-    services:
-  chess-cg-app:
-    build: .
-    volumes:
-      - .:/app
-      - /tmp/.X11-unix:/tmp/.X11-unix:rw  # Importante per Linux/Mac
-    environment:
-      - DISPLAY=${DISPLAY}                # Usa il display dell'host
-      - XAUTHORITY=/tmp/.Xauthority
-    network_mode: host                    # Per Linux, per Mac/Windows usa "bridge"
+  

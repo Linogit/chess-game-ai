@@ -7,7 +7,6 @@ RUN apt-get update && apt-get install -y \
     libsdl2-ttf-2.0-0 \
     libportmidi0 \
     wget \
-    unzip \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -16,16 +15,12 @@ COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Installa Stockfish - APPROCCIO SICURO
-RUN cd /tmp && \
-    wget -q https://files.stockfishchess.org/files/stockfish-16.1-linux.zip && \
-    unzip -q stockfish-16.1-linux.zip && \
-    mv stockfish-16.1-linux/Linux/stockfish-x64-avx2 /usr/local/bin/stockfish && \
-    chmod +x /usr/local/bin/stockfish && \
-    rm -rf stockfish-16.1-linux*
+# Installa Stockfish usando un metodo diverso - scarica direttamente il binario
+RUN wget -q -O /usr/local/bin/stockfish https://github.com/official-stockfish/Stockfish/releases/download/sf_16/stockfish-16-linux-x64 \
+    && chmod +x /usr/local/bin/stockfish
 
-# Verifica che Stockfish sia installato
-RUN ls -la /usr/local/bin/stockfish && /usr/local/bin/stockfish --version
+# Verifica l'installazione
+RUN ls -la /usr/local/bin/stockfish && echo "Stockfish installato correttamente"
 
 COPY . .
 

@@ -15,6 +15,9 @@ COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Verifica che Stockfish sia installato e trova il percorso esatto
+RUN which stockfish && stockfish --version
+
 COPY . .
 
 ENV SDL_VIDEODRIVER=dummy

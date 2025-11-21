@@ -1,11 +1,23 @@
 services:
-  chess-cg-app:
+  # Servizio principale dell'applicazione ChessGame
+  chess-cg:
     build: .
+    container_name: chess-cg-app
     volumes:
-      - .:/app
+      - ./src:/app/src
+      - ./pieces_png:/app/pieces_png
+      - ./pieces_svg:/app/pieces_svg
     environment:
-      - SDL_VIDEODRIVER=dummy
-      - SDL_AUDIODRIVER=disk
-      - XDG_RUNTIME_DIR=/tmp/runtime-root
+      - PYTHONPATH=/app/src
     stdin_open: true
     tty: true
+    # Se hai bisogno che chess-cg comunichi con stockfish, aggiungi:
+    depends_on:
+      - stockfish
+
+  # Servizio Stockfish separato
+  stockfish:
+    image: niklasf/stockfish:latest
+    container_name: stockfish-engine
+    ports:
+      - "8080:8080"

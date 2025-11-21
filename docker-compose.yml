@@ -1,13 +1,11 @@
 services:
-  chess-cg:
+  chess-cg-app:
     build: .
-    container_name: chess-cg-app
+    ports:
+      - "8088:80"   #  QUESTA RIGA DEVE ESSERCI!
     volumes:
-      - ./src:/app/src
-      - ./pieces_png:/app/pieces_png
-      - ./pieces_svg:/app/pieces_svg
+      - .:/app
     environment:
-      - PYTHONPATH=/app/src
-    stdin_open: true
-    tty: true
-    # Stockfish è ora installato direttamente in questo container
+      - SDL_VIDEODRIVER=dummy
+      - SDL_AUDIODRIVER=disk
+      - XDG_RUNTIME_DIR=/tmp/runtime-root
